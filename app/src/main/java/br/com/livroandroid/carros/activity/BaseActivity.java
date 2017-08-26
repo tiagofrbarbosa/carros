@@ -2,6 +2,7 @@ package br.com.livroandroid.carros.activity;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.livroandroid.carros.R;
+import br.com.livroandroid.carros.fragments.CarrosFragment;
+import br.com.livroandroid.carros.fragments.SiteLivroFragment;
 
 /**
  * Created by tfbarbosa on 22/08/17.
@@ -63,19 +66,19 @@ public class BaseActivity extends livroandroid.lib.activity.BaseActivity {
         private void onNavDrawerItemSelected(MenuItem menuItem){
             switch (menuItem.getItemId()){
                 case R.id.nav_item_carros_todos:
-                    toast("clicou em carros");
+                    replaceFragment(CarrosFragment.newInstance(R.string.carros));
                     break;
                 case R.id.nav_item_carros_classicos:
-                    toast("clicou em carros classicos");
+                    replaceFragment(CarrosFragment.newInstance(R.string.classicos));
                     break;
                 case R.id.nav_item_carros_esportivos:
-                    toast("clicou em esportivos");
+                    replaceFragment(CarrosFragment.newInstance(R.string.esportivos));
                     break;
                 case R.id.nav_item_carros_luxo:
-                    toast("clicou em carros luxo");
+                    replaceFragment(CarrosFragment.newInstance(R.string.luxo));
                     break;
                 case R.id.nav_item_site_livro:
-                    snack(drawerLayout,"clicou em site do livro");
+                    replaceFragment(new SiteLivroFragment());
                     break;
                 case R.id.nav_item_settings:
                     toast("clicou em configurações");
@@ -101,5 +104,9 @@ public class BaseActivity extends livroandroid.lib.activity.BaseActivity {
 
         protected void closeDrawer(){
             if(drawerLayout != null){drawerLayout.closeDrawer(GravityCompat.START);}
+        }
+
+        protected void replaceFragment(Fragment frag){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, frag, "TAG").commit();
         }
     }
